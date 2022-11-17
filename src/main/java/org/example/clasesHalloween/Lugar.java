@@ -34,10 +34,10 @@ public class Lugar {
     }
 
     public void setAforo(int aforo) {
-        if (aforo>=30){
+        if (aforo>=0){
             this.aforo = aforo;
         }else {
-            System.out.println("minimo 30 personas");
+            System.out.println("minimo 1 persona");
         }
     }
 }
