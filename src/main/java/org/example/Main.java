@@ -4,6 +4,7 @@ import org.example.clasesHalloween.Fiesta;
 import org.example.clasesHalloween.Invitado;
 import org.example.clasesHalloween.Lugar;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -11,17 +12,14 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner entradaPorTeclado=new Scanner(System.in);
-        Invitado objetoInvitado = new Invitado();
         Lugar objetoLugar = new Lugar();
         Fiesta objetoFiesta = new Fiesta();
 
-        System.out.println("****** GRAN FIESTA GRUPO URIBE********");
-        System.out.println("**************************************\n");
+        //Creando nuestro primer arraylist
+        ArrayList<Invitado> invitados=new ArrayList<Invitado>();
 
-        System.out.print("Digita el aforo del lugar de la fiesta: ");
-        objetoLugar.setAforo(entradaPorTeclado.nextInt());
-        int aforoGlobal= objetoLugar.getAforo();
-        Invitado[] invitados = new Invitado[objetoLugar.getAforo()];
+        System.out.println("****** GRAN FIESTA GRUPO URIBE********");
+        System.out.println("**************************************");
 
 
         //CICLO PARA UBICAR INVITADOS DENTRO DEL AFORO
@@ -35,16 +33,13 @@ public class Main {
         System.out.println("3. Registro de invitados");
         System.out.println("4. Ver invitados");
 
-
-
         do {
-            System.out.print("Digita una opcion del menu: ");
+            System.out.print("\nDigita una opcion del menu: ");
             variableDeControl = entradaPorTeclado.nextInt();
-
             switch (variableDeControl) {
-
                 case 1:
-                    System.out.println("\nDatos del Lugar: ");
+                    System.out.println("\n**************************************");
+                    System.out.println("Datos del Lugar: ");
                     System.out.println("**************************************\n");
                     System.out.print("Digita el aforo: ");
                     objetoLugar.setAforo(entradaPorTeclado.nextInt());
@@ -64,18 +59,48 @@ public class Main {
                     objetoFiesta.setCostosEquipos(entradaPorTeclado.nextDouble());
                     break;
                 case 3:
-                    int contadorDeInvitado=aforoGlobal- objetoLugar.getAforo();
-                    System.out.print("Digita el nombre del invitado: ");
-                    invitados[contadorDeInvitado]=new Invitado();
-                    invitados[contadorDeInvitado].setNombres(entradaPorTeclado.next());
-                    objetoLugar.setAforo(objetoLugar.getAforo()-1);
 
+                    if(objetoLugar.getAforo()>=1){
+
+                        //Restamos en 1 el aforo total cada que entra alguien a la fiesta
+                        objetoLugar.setAforo(objetoLugar.getAforo()-1);
+
+                        //Si voy a guardar objetos de una clase CUALQUIERA
+                        //en una arraylist primero debo crear un objeto
+                        //de esa clase cualquiera
+                        Invitado objetoInvitado = new Invitado();
+
+                        //LLENAR/PEDIR ALMACENAR/SETEAR/LLEVAR LOS ATRIBUTOS
+                        //DEL OBJETO QUE ACABO DE CREAR
+                        System.out.print("\nDigita el nombre del invitado: ");
+                        objetoInvitado.setNombres(entradaPorTeclado.next());
+                        System.out.print("Digita la edad del invitado: ");
+                        objetoInvitado.setEdad(entradaPorTeclado.nextInt());
+                        System.out.print( "Digita el id del invitado:");
+                        objetoInvitado.setId(entradaPorTeclado.next());
+                        System.out.print("El invitado aplica cover?: ");
+                        objetoInvitado.setAplicaCover(entradaPorTeclado.nextBoolean());
+
+                        //Si ya tiene mi objeto entonces agregamos
+                        //el objeto a la lista
+                        invitados.add(objetoInvitado);
+
+                    }else {
+
+                        System.out.println("Aragan, no te entra mas gente ahi\n");
+
+                    }
 
                     break;
                 case  4:
-                    for (int i=0; i<invitados.length; i++) {
-                        System.out.println(invitados[i].getNombres());
+                    //COMO RECORRO UN ARRAYLIST?
+                    //con un ciclo for ADAPTADO recorremos facilmete un ARRAYLIST
+                    for (Invitado invitado:invitados){
+
+                        System.out.println("Nombre: "+invitado.getNombres()+"\n"+"Edad: "+invitado.getEdad()+"\n"+"Id: "+invitado.getId()+"\n"+
+                                "Aplica cover?: "+invitado.isAplicaCover()+"\n");
                     }
+
                     break;
 
                 default:
